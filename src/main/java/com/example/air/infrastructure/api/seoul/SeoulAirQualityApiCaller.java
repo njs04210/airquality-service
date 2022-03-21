@@ -1,6 +1,7 @@
 package com.example.air.infrastructure.api.seoul;
 
 import com.example.air.application.AirQualityInfo;
+import com.example.air.application.constant.AirQualityGrade;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +15,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.example.air.util.AirQualityGrade.*;
-import static com.example.air.util.AirQualityGrade.getSo2Grade;
+import static com.example.air.application.util.AirQualityGradeUtil.*;
 
 @Slf4j
 @Component
@@ -74,7 +74,7 @@ public class SeoulAirQualityApiCaller {
 
         // region
         Integer avgPm10 = averagePm10(rows);
-        String avgPm10Grade = getPm10Grade(avgPm10);
+        AirQualityGrade avgPm10Grade = getPm10Grade(avgPm10);
         AirQualityInfo.Region region = AirQualityInfo.Region.builder()
                 .regionName("서울시")
                 .measureDatetime(changeFormat(rows.get(0).getMeasurementTime()))
@@ -96,30 +96,25 @@ public class SeoulAirQualityApiCaller {
     }
 
     private List<AirQualityInfo.Site> convert(List<SeoulAirQualityApiDto.Row> rows) {
+        return rows.stream()
+                .map(row -> AirQualityInfo.Site.builder()
+                        .siteName(row.getSite())
+                        .measureDatetime(changeFormat(row.getMeasurementTime()))
+                        .pm25(row.getPm25())
+                        .pm25Grade(getPm25Grade(row.getPm25()))
+                        .pm10(row.getPm10())
+                        .pm10Grade(getPm10Grade(row.getPm10()))
+                        .o3(row.getO3())
+                        .o3Grade(getO3Grade(row.getO3()))
+                        .no2(row.getNo2())
+                        .no2Grade(getNo2Grade(row.getNo2()))
+                        .co(row.getCo())
+                        .coGrade(getCoGrade(row.getCo()))
+                        .so2(row.getSo2())
+                        .so2Grade(getSo2Grade(row.getSo2()))
+                        .build())
+                .collect(Collectors.toList());
 
-        List<AirQualityInfo.Site> sites = new ArrayList<>();
-
-        for (SeoulAirQualityApiDto.Row row : rows) {
-            AirQualityInfo.Site site = AirQualityInfo.Site.builder()
-                    .siteName(row.getSite())
-                    .measureDatetime(changeFormat(row.getMeasurementTime()))
-                    .pm25(row.getPm25())
-                    .pm25Grade(getPm25Grade(row.getPm25()))
-                    .pm10(row.getPm10())
-                    .pm10Grade(getPm10Grade(row.getPm10()))
-                    .o3(row.getO3())
-                    .o3Grade(getO3Grade(row.getO3()))
-                    .no2(row.getNo2())
-                    .no2Grade(getNo2Grade(row.getNo2()))
-                    .co(row.getCo())
-                    .coGrade(getCoGrade(row.getCo()))
-                    .so2(row.getSo2())
-                    .so2Grade(getSo2Grade(row.getSo2()))
-                    .build();
-
-            sites.add(site);
-        }
-        return sites;
     }
 
     private ZonedDateTime changeFormat(String dateTime) {

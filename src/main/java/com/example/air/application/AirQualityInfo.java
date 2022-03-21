@@ -1,10 +1,11 @@
 package com.example.air.application;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.example.air.application.constant.AirQualityGrade;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -13,14 +14,19 @@ public class AirQualityInfo {
     private Meta meta;
     private Result result;
 
+    public AirQualityInfo searchBySiteName(String siteName) {
+        Site searchedSite = result.searchSite(siteName);
+        List<Site> sites = Collections.singletonList(searchedSite);
+        this.result.sites = sites;
+        this.meta.totalCount = sites.size();
+        return this;
+    }
+
     @Getter
     @Builder
     public static class Meta {
         private Integer totalCount;
 
-        public void updateTotalCount(Integer totalCount) {
-            this.totalCount = totalCount;
-        }
     }
 
     @Getter
@@ -29,8 +35,11 @@ public class AirQualityInfo {
         private Region region;
         private List<Site> sites;
 
-        public void updateSites(List<Site> sites) {
-            this.sites = sites;
+        private Site searchSite(String siteName) {
+            return sites.stream()
+                    .filter(site -> site.getSiteName().equals(siteName))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(siteName + "에 해당하는 자치구가 존재하지 않습니다."));
         }
     }
 
@@ -40,39 +49,26 @@ public class AirQualityInfo {
         private String regionName;
         private ZonedDateTime measureDatetime;
         private Integer avgPm10;
-        private String avgPm10Grade;
+        private AirQualityGrade avgPm10Grade;
     }
 
     @Getter
     @Builder
     public static class Site {
-        @JsonProperty("siteName")
         private String siteName;
-        @JsonProperty("measureDatetime")
         private ZonedDateTime measureDatetime;
-        @JsonProperty("pm25")
         private Integer pm25;
-        @JsonProperty("pm25Grade")
-        private String pm25Grade;
-        @JsonProperty("pm10")
+        private AirQualityGrade pm25Grade;
         private Integer pm10;
-        @JsonProperty("pm10Grade")
-        private String pm10Grade;
-        @JsonProperty("o3")
+        private AirQualityGrade pm10Grade;
         private Double o3;
-        @JsonProperty("o3Grade")
-        private String o3Grade;
-        @JsonProperty("no2")
+        private AirQualityGrade o3Grade;
         private Double no2;
-        @JsonProperty("no2Grade")
-        private String no2Grade;
-        @JsonProperty("co")
+        private AirQualityGrade no2Grade;
         private Double co;
-        @JsonProperty("coGrade")
-        private String coGrade;
-        @JsonProperty("so2")
+        private AirQualityGrade coGrade;
         private Double so2;
-        @JsonProperty("so2Grade")
-        private String so2Grade;
+        private AirQualityGrade so2Grade;
     }
+
 }
