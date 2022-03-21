@@ -1,7 +1,6 @@
 package com.example.air.application;
 
-import com.example.air.infrastructure.api.busan.BusanAirQualityApiCaller;
-import com.example.air.infrastructure.api.seoul.SeoulAirQualityApiCaller;
+import com.example.air.infrastructure.api.AirQualityApiCaller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -10,29 +9,17 @@ import org.springframework.util.StringUtils;
 @RequiredArgsConstructor
 public class AirQualityService {
 
-    private final SeoulAirQualityApiCaller seoulAirQualityApiCaller;
-    private final BusanAirQualityApiCaller busanAirQualityApiCaller;
+    private final AirQualityApiCallerFactory airQualityApiCallerFactory;
 
     public AirQualityInfo getAirQualityInfo(String regionName, String siteName) {
 
-        if (regionName.equals("seoul")) {
-            AirQualityInfo airQualityInfo = seoulAirQualityApiCaller.getAirQuality();
+        AirQualityApiCaller airQualityApiCaller = airQualityApiCallerFactory.getAirQualityApiCaller(regionName);
+        AirQualityInfo airQualityInfo = airQualityApiCaller.getAirQuality();
 
-            if (StringUtils.hasLength(siteName)) {
-                return airQualityInfo.searchBySiteName(siteName);
-            }
-            return airQualityInfo;
+        if (StringUtils.hasLength(siteName)) {
+            return airQualityInfo.searchBySiteName(siteName);
         }
 
-        if (regionName.equals("busan")) {
-            AirQualityInfo airQualityInfo = busanAirQualityApiCaller.getAirQuality();
-
-            if (StringUtils.hasLength(siteName)) {
-                return airQualityInfo.searchBySiteName(siteName);
-            }
-            return airQualityInfo;
-        }
-
-        throw new RuntimeException("요청한 시(도) 정보가 없습니다.");
+        return airQualityInfo;
     }
 }

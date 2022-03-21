@@ -2,6 +2,7 @@ package com.example.air.infrastructure.api.busan;
 
 import com.example.air.application.AirQualityInfo;
 import com.example.air.application.constant.AirQualityGrade;
+import com.example.air.infrastructure.api.AirQualityApiCaller;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ import static com.example.air.application.util.AirQualityGradeUtil.*;
 
 @Slf4j
 @Component
-public class BusanAirQualityApiCaller {
+public class BusanAirQualityApiCaller implements AirQualityApiCaller {
     private final BusanAirQualityApi busanAirQualityApi;
 
     public BusanAirQualityApiCaller(@Value("${api.busan.base-url}") String baseUrl) {
@@ -39,6 +40,7 @@ public class BusanAirQualityApiCaller {
         this.busanAirQualityApi = retrofit.create(BusanAirQualityApi.class);
     }
 
+    @Override
     public AirQualityInfo getAirQuality() {
         try {
             val call = busanAirQualityApi.getAirQuality();
