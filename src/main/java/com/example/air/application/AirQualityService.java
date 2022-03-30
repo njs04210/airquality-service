@@ -1,5 +1,6 @@
 package com.example.air.application;
 
+import com.example.air.application.constant.Region;
 import com.example.air.infrastructure.api.AirQualityApiCaller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ public class AirQualityService {
 
     private final AirQualityApiCallerFactory airQualityApiCallerFactory;
 
-    public AirQualityInfo getAirQualityInfo(String regionName, String siteName) {
+    public AirQualityInfo getAirQualityInfo(Region regionName, String siteName) {
 
         AirQualityApiCaller airQualityApiCaller = airQualityApiCallerFactory.getAirQualityApiCaller(regionName);
         AirQualityInfo airQualityInfo = airQualityApiCaller.getAirQuality();

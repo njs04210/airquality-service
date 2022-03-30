@@ -2,6 +2,7 @@ package com.example.air.infrastructure.api.busan;
 
 import com.example.air.application.AirQualityInfo;
 import com.example.air.application.constant.AirQualityGrade;
+import com.example.air.application.constant.Region;
 import com.example.air.infrastructure.api.AirQualityApiCaller;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,6 +39,11 @@ public class BusanAirQualityApiCaller implements AirQualityApiCaller {
                 .build();
 
         this.busanAirQualityApi = retrofit.create(BusanAirQualityApi.class);
+    }
+
+    @Override
+    public Region getRegion() {
+        return Region.busan;
     }
 
     @Override
