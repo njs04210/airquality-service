@@ -1,5 +1,6 @@
 package com.example.air.application;
 
+import com.example.air.application.error.exception.RegionNotExistsException;
 import com.example.air.infrastructure.api.AirQualityApiCaller;
 import com.example.air.infrastructure.api.busan.BusanAirQualityApiCaller;
 import com.example.air.infrastructure.api.seoul.SeoulAirQualityApiCaller;
@@ -14,6 +15,7 @@ public class AirQualityApiCallerFactory {
     private final SeoulAirQualityApiCaller seoulAirQualityApiCaller;
 
     public AirQualityApiCaller getAirQualityApiCaller(String regionName) {
+
         if (regionName.equals("seoul")) {
             return seoulAirQualityApiCaller;
         }
@@ -22,6 +24,6 @@ public class AirQualityApiCallerFactory {
             return busanAirQualityApiCaller;
         }
 
-        throw new RuntimeException("요청한 시(도) 정보가 없습니다.");
+        throw new RegionNotExistsException();
     }
 }

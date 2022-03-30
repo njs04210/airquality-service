@@ -3,10 +3,7 @@ package com.example.air.interfaces.api;
 import com.example.air.application.AirQualityService;
 import com.example.air.application.AirQualityInfo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor

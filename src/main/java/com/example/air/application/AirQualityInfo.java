@@ -1,6 +1,7 @@
 package com.example.air.application;
 
 import com.example.air.application.constant.AirQualityGrade;
+import com.example.air.application.error.exception.SiteNotExistsException;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -39,7 +40,7 @@ public class AirQualityInfo {
             return sites.stream()
                     .filter(site -> site.getSiteName().equals(siteName))
                     .findFirst()
-                    .orElseThrow(() -> new IllegalArgumentException(siteName + "에 해당하는 자치구가 존재하지 않습니다."));
+                    .orElseThrow(SiteNotExistsException::new);
         }
     }
 
