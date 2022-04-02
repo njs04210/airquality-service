@@ -2,12 +2,12 @@ package com.example.air.application.error.exception;
 
 import com.example.air.application.error.ErrorCode;
 
-public class BusinessException extends RuntimeException {
+public class CustomNotFoundException extends RuntimeException {
 
     private ErrorCode errorCode;
 
-    public BusinessException(ErrorCode errorCode) {
-        super(errorCode.getMessage());
+    public CustomNotFoundException(ErrorCode errorCode) {
+        super(errorCode.getDescription());
         this.errorCode = errorCode;
     }
 

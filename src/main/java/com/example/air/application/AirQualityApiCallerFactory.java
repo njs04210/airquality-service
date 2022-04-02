@@ -1,7 +1,7 @@
 package com.example.air.application;
 
 import com.example.air.application.constant.Region;
-import com.example.air.application.error.exception.SiteNotExistsException;
+import com.example.air.application.error.exception.OpenApiNotExistsException;
 import com.example.air.infrastructure.api.AirQualityApiCaller;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +23,7 @@ public class AirQualityApiCallerFactory {
 
     public AirQualityApiCaller getAirQualityApiCaller(Region region) {
         return Optional.of(callerMap.get(region))
-                .orElseThrow(SiteNotExistsException::new);
+                .orElseThrow(OpenApiNotExistsException::new);
 
     }
 }

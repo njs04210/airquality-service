@@ -6,7 +6,6 @@ import com.example.air.application.constant.Region;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -17,10 +16,10 @@ public class AirQualityApiController {
     private final AirQualityService airQualityService;
 
     @GetMapping("/{regionName}")
-    public ResponseEntity<AirQualityInfo> getAirQualityInfo(@PathVariable Region regionName,
-                                                            @RequestParam(required = false) String siteName) {
+    public AirQualityInfo getAirQualityInfo(@PathVariable Region regionName,
+                                            @RequestParam(required = false) String siteName) {
 
-        return ResponseEntity.ok(airQualityService.getAirQualityInfo(regionName, siteName));
+        return airQualityService.getAirQualityInfo(regionName, siteName);
 
     }
 }
