@@ -4,7 +4,10 @@ import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 public class CustomKeyGenerator implements KeyGenerator {
 
@@ -13,13 +16,16 @@ public class CustomKeyGenerator implements KeyGenerator {
         return target.getClass().getSimpleName() + "_"
                 + method.getName() + "_"
                 + StringUtils.arrayToDelimitedString(params, "_") + "_"
-                + getDateAndHour();
+                + getDate();
     }
 
-    private String getDateAndHour() {
-        Calendar today = Calendar.getInstance();
-        return String.valueOf(today.get(Calendar.YEAR)) + (today.get(Calendar.MONTH) + 1) +
-                today.get(Calendar.DAY_OF_MONTH) + today.get(Calendar.HOUR_OF_DAY);
+    private String getDate() {
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHH");
+        sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
+        Date date = calendar.getTime();
+
+        return sdf.format(date);
     }
 
 }
