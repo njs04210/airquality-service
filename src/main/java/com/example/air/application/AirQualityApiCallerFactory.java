@@ -22,7 +22,7 @@ public class AirQualityApiCallerFactory {
     }
 
     public AirQualityApiCaller getAirQualityApiCaller(Region region) {
-        return Optional.of(callerMap.get(region))
+        return Optional.ofNullable(callerMap.get(region))
                 .orElseThrow(OpenApiNotExistsException::new);
 
     }
