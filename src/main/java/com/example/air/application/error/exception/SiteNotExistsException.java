@@ -4,8 +4,8 @@ import com.example.air.application.error.ErrorCode;
 
 public class SiteNotExistsException extends CustomNotFoundException {
 
-    public SiteNotExistsException() {
-        super(ErrorCode.NO_SITE_NAME_ERROR);
+    public SiteNotExistsException(Object value) {
+        super(ErrorCode.NOT_FOUND_SITE, value);
     }
 
 }

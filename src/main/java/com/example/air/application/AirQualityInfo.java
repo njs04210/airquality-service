@@ -40,7 +40,7 @@ public class AirQualityInfo {
             return sites.stream()
                     .filter(site -> site.getSiteName().equals(siteName))
                     .findFirst()
-                    .orElseThrow(SiteNotExistsException::new);
+                    .orElseThrow(() -> new SiteNotExistsException(siteName));
         }
     }
 
