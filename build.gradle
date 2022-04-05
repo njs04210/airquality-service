@@ -21,7 +21,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
 
     // caching
-    implementation 'org.springframework.boot:spring-boot-starter-cache:2.6.5'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.ehcache:ehcache:3.8.1'
+    implementation 'javax.cache:cache-api:1.1.1'
 
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 

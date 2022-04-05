@@ -14,9 +14,9 @@ public class AirQualityService {
     private final AirQualityApiCallerFactory airQualityApiCallerFactory;
 
     @Cacheable(value = "airQualityInfo", keyGenerator = "customKeyGenerator")
-    public AirQualityInfo getAirQualityInfo(String regionName, String siteName) {
+    public AirQualityInfo getAirQualityInfo(Region regionName, String siteName) {
 
-        AirQualityApiCaller airQualityApiCaller = airQualityApiCallerFactory.getAirQualityApiCaller(Region.of(regionName));
+        AirQualityApiCaller airQualityApiCaller = airQualityApiCallerFactory.getAirQualityApiCaller(regionName);
         AirQualityInfo airQualityInfo = airQualityApiCaller.getAirQuality();
 
         if (StringUtils.hasLength(siteName)) {
