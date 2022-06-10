@@ -1,8 +1,11 @@
-# 전국 대기질 정보 서비스 
+# 전국 대기질 정보 서비스 ☀️
 
-선택한 행정구역(시/도)로 해당 행정구역의 평균 미세먼지 현황과 전체 자치구(동)의 기타 대기질 정보를 확인할 수 있습니다. 자치구(동)을 선택해 일부만을 조회할 수도 있습니다.
+선택한 행정구역(시/도)로 해당 행정구역의 평균 미세먼지 현황과 전체 자치구(동)의 기타 대기질 정보를 확인할 수 있습니다.
+자치구(동)을 선택해 일부만을 조회할 수도 있습니다.
+- https://air-quality-service.herokuapp.com/
+- 현재 `서울시`, `부산시` 지원
 
-** 현재 서울, 부산만 지원
+
 <img width="612" alt="스크린샷 2022-06-10 16 19 50" src="https://user-images.githubusercontent.com/68816492/173021684-f784ebd7-7e52-4863-9fed-905cbc682d99.png">
 
 ---
@@ -45,8 +48,7 @@ Host: localhost
 | Name | Type | Description |
 | --- | --- | --- |
 | regionName | String | 시/도 |
-| measureDatetime | String | 측정시간, ISO-8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm 형태로 돌아옵니다.
-ex) 2022-03-11T21:00:00+09:00 |
+| measureDatetime | String | 측정시간, ISO-8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm 형태로 돌아옵니다. ex) 2022-03-11T21:00:00+09:00 |
 | avgPm10 | Integer | 시/도 평균 미세먼지 농도(㎍/㎥) |
 | avgPm10Grade | String | 시/도 평균 미세먼지 등급 |
 
@@ -55,8 +57,7 @@ ex) 2022-03-11T21:00:00+09:00 |
 | Name | Type | Description |
 | --- | --- | --- |
 | siteName | String | 자치구(동) |
-| measureDatetime | String | 측정시간, ISO-8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm 형태로 돌아옵니다.
-ex) 2022-03-11T21:00:00+09:00 |
+| measureDatetime | String | 측정시간, ISO-8601 형식인 yyyy-MM-dd'T'HH:mm:ss.SSS±hh:mm 형태로 돌아옵니다. ex) 2022-03-11T21:00:00+09:00 |
 | pm25 | Integer | 초미세먼지 농도(㎍/㎥) |
 | pm25Grade | String | 초미세먼지 등급 |
 | pm10 | Integer | 미세먼지 농도(㎍/㎥) |
