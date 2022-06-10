@@ -5,13 +5,14 @@ import com.example.air.application.error.exception.SiteNotExistsException;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
 
 @Getter
 @Builder
-public class AirQualityInfo {
+public class AirQualityInfo implements Serializable {
     private Meta meta;
     private Result result;
 
@@ -25,14 +26,14 @@ public class AirQualityInfo {
 
     @Getter
     @Builder
-    public static class Meta {
+    public static class Meta implements Serializable {
         private Integer totalCount;
 
     }
 
     @Getter
     @Builder
-    public static class Result {
+    public static class Result implements Serializable {
         private Region region;
         private List<Site> sites;
 
@@ -46,7 +47,7 @@ public class AirQualityInfo {
 
     @Getter
     @Builder
-    public static class Region {
+    public static class Region implements Serializable {
         private String regionName;
         private ZonedDateTime measureDatetime;
         private Integer avgPm10;
@@ -55,7 +56,7 @@ public class AirQualityInfo {
 
     @Getter
     @Builder
-    public static class Site {
+    public static class Site implements Serializable {
         private String siteName;
         private ZonedDateTime measureDatetime;
         private Integer pm25;
